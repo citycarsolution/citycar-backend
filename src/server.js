@@ -12,14 +12,18 @@ const app = express();
 
 async function startServer() {
   try {
-    await connectDB(); // 👈 ab yahan allowed hai
+    await connectDB();
+
+    // ✅ yahan allowed origins ka array
+    const allowedOrigins = [
+      "http://localhost:5173",                    // local dev
+      "https://citycabsolution.netlify.app",      // purana Netlify
+      "https://citycabsolution.vercel.app",       // 🔹 NEW Vercel frontend
+    ];
 
     app.use(
       cors({
-        origin: [
-          "http://localhost:5173",
-          "https://citycabsolution.netlify.app",
-        ],
+        origin: allowedOrigins,
         methods: ["GET", "POST", "PUT", "PATCH", "DELETE", "OPTIONS"],
         credentials: true,
       })
@@ -50,4 +54,4 @@ async function startServer() {
   }
 }
 
-startServer(); // 👈 yahan se server start
+startServer();
